@@ -147,6 +147,17 @@ static inline unsigned int wpa_swap_32(unsigned int v)
 #endif /* __CYGWIN__ || CONFIG_NATIVE_WINDOWS */
 
 
+#ifndef bswap_16
+#define bswap_16(a) ((((u16) (a) << 8) & 0xff00) | (((u16) (a) >> 8) & 0xff))
+#endif
+
+#ifndef bswap_32
+#define bswap_32(a) ((((u32) (a) << 24) & 0xff000000) | \
+		     (((u32) (a) << 8) & 0xff0000) | \
+     		     (((u32) (a) >> 8) & 0xff00) | \
+     		     (((u32) (a) >> 24) & 0xff))
+#endif
+
 #ifndef WPA_BYTE_SWAP_DEFINED
 
 #ifndef __BYTE_ORDER
@@ -372,17 +383,6 @@ typedef int socklen_t;
 
 #ifndef __func__
 #define __func__ "__func__ not defined"
-#endif
-
-#ifndef bswap_16
-#define bswap_16(a) ((((u16) (a) << 8) & 0xff00) | (((u16) (a) >> 8) & 0xff))
-#endif
-
-#ifndef bswap_32
-#define bswap_32(a) ((((u32) (a) << 24) & 0xff000000) | \
-		     (((u32) (a) << 8) & 0xff0000) | \
-     		     (((u32) (a) >> 8) & 0xff00) | \
-     		     (((u32) (a) >> 24) & 0xff))
 #endif
 
 #ifndef MSG_DONTWAIT

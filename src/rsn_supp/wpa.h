@@ -180,7 +180,7 @@ static inline void wpa_sm_notify_disassoc(struct wpa_sm *sm)
 }
 
 static inline void wpa_sm_set_pmk(struct wpa_sm *sm, const u8 *pmk,
-				  size_t pmk_len)
+				  size_t pmk_len, const u8 *bssid)
 {
 }
 
@@ -318,9 +318,9 @@ static inline void wpa_sm_set_rx_replay_ctr(struct wpa_sm *sm,
 					    const u8 *rx_replay_counter)
 {
 }
-
-static inline void wpa_sm_set_ptk_kck_kek(struct wpa_sm *sm, const u8 *ptk_kck,
-					  const u8 *ptk_kek)
+static inline void wpa_sm_set_ptk_kck_kek(struct wpa_sm *sm,
+					  const u8 *ptk_kck, size_t ptk_kck_len,
+		                          const u8 *ptk_kek, size_t ptk_kek_len)
 {
 }
 
