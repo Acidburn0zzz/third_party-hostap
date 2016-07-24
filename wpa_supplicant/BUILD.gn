@@ -1,0 +1,68 @@
+# Build file for Fuchsia OS
+#
+# Copyright (c) 2016 The Fuchsia Authors.
+#
+# This software may be distributed under the terms of the BSD license.
+# See README for more details.
+
+executable("wpa_supplicant") {
+  sources = [
+    "../src/common/ieee802_11_common.c",
+    "../src/common/hw_features_common.c",
+    "../src/crypto/random.c",
+    "../src/crypto/crypto_internal.c",
+    "../src/crypto/md5.c",
+    "../src/crypto/md5-internal.c",
+    "../src/crypto/sha1.c",
+    "../src/crypto/sha1-internal.c",
+    "../src/crypto/sha256.c",
+    "../src/crypto/sha256-internal.c",
+    "../src/crypto/sha256-prf.c",
+    "../src/crypto/sha256-tlsprf.c",
+    "../src/crypto/tls_none.c",
+    "../src/drivers/driver_common.c",
+    "../src/drivers/driver_none.c",
+    "../src/drivers/drivers.c",
+    "../src/l2_packet/l2_packet_none.c",
+    "../src/utils/common.c",
+    "../src/utils/wpa_debug.c",
+    "../src/utils/wpabuf.c",
+    "../src/utils/os_none.c",
+    "../src/utils/eloop.c",
+    "config.c",
+    "notify.c",
+    "bss.c",
+    "eap_register.c",
+    "wmm_ac.c",
+    "config_file.c",
+    "wpa_supplicant.c",
+    "events.c",
+    "blacklist.c",
+    "wpas_glue.c",
+    "scan.c",
+    "main_none.c",
+  ]
+
+  include_dirs = [
+    "../src",
+    "../src/utils",
+    ".",
+  ]
+
+  cflags = [
+    "-MMD",
+    "-O2",
+    "-Wall",
+    "-g",
+    "-DCONFIG_BACKEND_FILE",
+    "-DCONFIG_CRYPTO_INTERNAL",
+    "-DCONFIG_DRIVER_NONE",
+    "-DCONFIG_NO_PBKDF2",
+    "-DCONFIG_NO_CONFIG_BLOBS",
+    "-DCONFIG_NO_SCAN_PROCESSING",
+    "-DCONFIG_NO_WPA",
+    "-DCONFIG_NO_ROAMING",
+    "-DCONFIG_SHA256",
+    "-DOS_NO_C_LIB_DEFINES",
+  ]
+}
