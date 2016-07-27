@@ -27,7 +27,7 @@ executable("wpa_supplicant") {
     "../src/utils/common.c",
     "../src/utils/wpa_debug.c",
     "../src/utils/wpabuf.c",
-    "../src/utils/os_none.c",
+    "../src/utils/os_fuchsia.c",
     "../src/utils/eloop.c",
     "config.c",
     "notify.c",
@@ -68,6 +68,5 @@ executable("wpa_supplicant") {
     "-DCONFIG_NO_WPA",
     "-DCONFIG_NO_ROAMING",
     "-DCONFIG_SHA256",
-    "-DOS_NO_C_LIB_DEFINES",
   ]
 }
