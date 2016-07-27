@@ -49,11 +49,16 @@ executable("wpa_supplicant") {
     ".",
   ]
 
+  configs -= [ "//build/config:default_warnings" ]
+
   cflags = [
     "-MMD",
     "-O2",
-    "-Wall",
     "-g",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
     "-DCONFIG_BACKEND_FILE",
     "-DCONFIG_CRYPTO_INTERNAL",
     "-DCONFIG_DRIVER_NONE",
