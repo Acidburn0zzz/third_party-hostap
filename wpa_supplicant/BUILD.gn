@@ -40,7 +40,7 @@ executable("wpa_supplicant") {
     "blacklist.c",
     "wpas_glue.c",
     "scan.c",
-    "main_none.c",
+    "main_fuchsia.c",
   ]
 
   include_dirs = [
