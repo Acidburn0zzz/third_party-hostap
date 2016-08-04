@@ -94,10 +94,4 @@ source_set("wpa_supplicant_fuchsia") {
   ]
 
   configs += [ ":wpa_supplicant_private" ]
-
-  deps = [
-    "//lib/ftl",
-    "//lib/mtl",
-    "//mojo/system",
-  ]
 }
