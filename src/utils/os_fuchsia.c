@@ -12,6 +12,7 @@
 
 #include "includes.h"
 
+#include <magenta/syscalls.h>
 #include <sys/wait.h>
 #include <time.h>
 
@@ -149,22 +150,21 @@ int os_daemonize(const char *pid_file) {
 void os_daemonize_terminate(const char *pid_file) { /* Not supported */ }
 
 int os_get_random(unsigned char *buf, size_t len) {
-  FILE *f;
-  size_t rc;
-
   if (TEST_FAIL()) return -1;
 
-  /* TODO(alangardner): implement using random for now */
-  f = fopen("/dev/urandom", "rb");
-  if (f == NULL) {
-    printf("Could not open /dev/urandom.\n");
-    return -1;
+  while (len > 0) {
+    mx_ssize_t output_bytes_this_pass = MX_CPRNG_DRAW_MAX_LEN;
+    if (len < (size_t)output_bytes_this_pass) {
+      output_bytes_this_pass = len;
+    }
+    output_bytes_this_pass = mx_cprng_draw(buf, output_bytes_this_pass);
+    if (output_bytes_this_pass < 0) {
+      abort();
+    }
+    len -= output_bytes_this_pass;
+    buf += output_bytes_this_pass;
   }
-
-  rc = fread(buf, 1, len, f);
-  fclose(f);
-
-  return rc != len ? -1 : 0;
+  return 0;
 }
 
 unsigned long os_random(void) { return random(); }
@@ -525,51 +525,6 @@ char *os_strdup(const char *s) {
 #endif /* WPA_TRACE */
 
 int os_exec(const char *program, const char *arg, int wait_completion) {
-  /* TODO(alangardner): Implement using launchpad */
-  pid_t pid;
-  int pid_status;
-
-  pid = fork();
-  if (pid < 0) {
-    perror("fork");
-    return -1;
-  }
-
-  if (pid == 0) {
-    /* run the external command in the child process */
-    const int MAX_ARG = 30;
-    char *_program, *_arg, *pos;
-    char *argv[MAX_ARG + 1];
-    int i;
-
-    _program = os_strdup(program);
-    _arg = os_strdup(arg);
-
-    argv[0] = _program;
-
-    i = 1;
-    pos = _arg;
-    while (i < MAX_ARG && pos && *pos) {
-      while (*pos == ' ') pos++;
-      if (*pos == '\0') break;
-      argv[i++] = pos;
-      pos = os_strchr(pos, ' ');
-      if (pos) *pos++ = '\0';
-    }
-    argv[i] = NULL;
-
-    execv(program, argv);
-    perror("execv");
-    os_free(_program);
-    os_free(_arg);
-    exit(0);
-    return -1;
-  }
-
-  if (wait_completion) {
-    /* wait for the child process to complete in the parent */
-    waitpid(pid, &pid_status, 0);
-  }
-
-  return 0;
+  // Not implemented.
+  return -1;
 }
