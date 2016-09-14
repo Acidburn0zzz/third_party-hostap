@@ -9,6 +9,7 @@
 #include "includes.h"
 
 #include "common.h"
+#include "config.h"
 #include "wpa_supplicant_i.h"
 
 int main(int argc, char *argv[]) {
@@ -18,16 +19,26 @@ int main(int argc, char *argv[]) {
   struct wpa_global *global;
 
   memset(&params, 0, sizeof(params));
-  params.wpa_debug_level = MSG_DEBUG;
+  params.wpa_debug_level = MSG_EXCESSIVE;
 
   global = wpa_supplicant_init(&params);
   if (global == NULL) return -1;
 
   memset(&iface, 0, sizeof(iface));
-  iface.ifname = "none";
+  iface.ifname = "mock";
   iface.ctrl_interface = "";
 
   if (wpa_supplicant_add_iface(global, &iface, NULL) == NULL) exitcode = -1;
+
+  if (exitcode == 0) {
+    struct wpa_supplicant *supplicant = global->ifaces;
+    struct wpa_ssid *ssid = wpa_config_add_network(supplicant->conf);
+    wpa_config_set_network_defaults(ssid);
+    wpa_config_set_quoted(ssid, "ssid", "MockAp");
+    wpa_config_set(ssid, "key_mgmt", "NONE", 0);
+  }
+
+  // TODO(alangardner): Create option to terminate
 
   if (exitcode == 0) exitcode = wpa_supplicant_run(global);
 

@@ -38,7 +38,7 @@ config("wpa_supplicant_private") {
   defines = [
     "CONFIG_BACKEND_FILE",
     "CONFIG_CRYPTO_INTERNAL",
-    "CONFIG_DRIVER_NONE",
+    "CONFIG_DRIVER_MOCK",
     "CONFIG_NO_PBKDF2",
     "CONFIG_NO_CONFIG_BLOBS",
     "CONFIG_NO_SCAN_PROCESSING",
@@ -64,7 +64,7 @@ source_set("wpa_supplicant_original") {
     "../src/crypto/sha256-tlsprf.c",
     "../src/crypto/tls_none.c",
     "../src/drivers/driver_common.c",
-    "../src/drivers/driver_none.c",
+    "../src/drivers/driver_mock.c",
     "../src/drivers/drivers.c",
     "../src/l2_packet/l2_packet_none.c",
     "../src/utils/common.c",
