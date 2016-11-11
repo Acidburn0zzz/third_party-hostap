@@ -97,7 +97,6 @@ source_set("wpa_supplicant_fuchsia") {
 
   deps = [
     "//lib/ftl",
-    "//lib/mtl:mtl_with_mojo",
-    "//mojo/system",
+    "//lib/mtl",
   ]
 }
