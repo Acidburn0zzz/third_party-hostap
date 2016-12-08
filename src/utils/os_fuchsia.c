@@ -153,11 +153,11 @@ int os_get_random(unsigned char *buf, size_t len) {
   if (TEST_FAIL()) return -1;
 
   while (len > 0) {
-    mx_size_t output_bytes_this_pass = MX_CPRNG_DRAW_MAX_LEN;
+    size_t output_bytes_this_pass = MX_CPRNG_DRAW_MAX_LEN;
     if (len < (size_t)output_bytes_this_pass) {
       output_bytes_this_pass = len;
     }
-    mx_size_t bytes_drawn;
+    size_t bytes_drawn;
     mx_status_t status = mx_cprng_draw(buf, output_bytes_this_pass, &bytes_drawn);
     if (status != NO_ERROR) {
       abort();
