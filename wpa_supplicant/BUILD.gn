@@ -26,11 +26,6 @@ config("wpa_supplicant_private") {
   ]
 
   cflags = [
-    "-MMD",
-    "-O2",
-    "-g",
-    "-Wall",
-    "-Wextra",
     "-Wno-unused-function",
     "-Wno-unused-parameter",
   ]
